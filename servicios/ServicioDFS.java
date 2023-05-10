@@ -2,12 +2,11 @@ package servicios;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import estructuras.Grafo;
 
 public class ServicioDFS {
 
-	private Grafo<?> grafo;
+    private Grafo<?> grafo;
 
 	public ServicioDFS(Grafo<?> grafo) {
 		this.grafo = grafo;
@@ -17,5 +16,5 @@ public class ServicioDFS {
 		// Resolver DFS
 		return new ArrayList<>();
 	}
-
+        
 }

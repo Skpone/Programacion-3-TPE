@@ -3,8 +3,8 @@ package estructuras;
 import java.util.Iterator;
 
 public interface Grafo<T> {
-	
-	// Agrega un vertice 
+    
+        // Agrega un vertice 
 	public void agregarVertice(int verticeId);
 
 	// Borra un vertice
@@ -42,6 +42,6 @@ public interface Grafo<T> {
 		
 	// Obtiene un iterador que me permite recorrer todos los arcos que parten desde verticeId
 	public Iterator<Arco<T>> obtenerArcos(int verticeId);
-	
-	
+        
+        
 }

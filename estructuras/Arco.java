@@ -7,12 +7,16 @@ package estructuras;
  * (Inmutable: una vez creado el arco no es posible cambiarle los valores).
  */
 public class Arco<T> {
-
-	private int verticeOrigen;
+    
+        private int verticeOrigen;
 	private int verticeDestino;
 	private T etiqueta;
 
-	public Arco(int verticeOrigen, int verticeDestino, T etiqueta) {
+        public Arco(int verticeOrigen, int verticeDestino){ //arco sin etiqueta
+            this(verticeOrigen, verticeDestino, null);
+        }
+        
+	public Arco(int verticeOrigen, int verticeDestino, T etiqueta) { //arco con etiqueta
 		this.verticeOrigen = verticeOrigen;
 		this.verticeDestino = verticeDestino;
 		this.etiqueta = etiqueta;
@@ -29,5 +33,14 @@ public class Arco<T> {
 	public T getEtiqueta() {
 		return etiqueta;
 	}
-
+        
+        @Override
+        public boolean equals(Object o){
+            try {
+                Arco arco = ((Arco)o);
+                return this.getVerticeDestino() == arco.getVerticeDestino() && this.getVerticeOrigen() == arco.getVerticeOrigen();
+            }catch(Exception e){
+                return false;
+            }
+        }
 }

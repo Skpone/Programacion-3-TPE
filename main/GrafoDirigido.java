@@ -3,85 +3,120 @@ package main;
 import java.util.Iterator;
 import estructuras.Grafo;
 import estructuras.Arco;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class GrafoDirigido<T> implements Grafo<T> {
-
-	@Override
+        HashMap<Integer, LinkedList<Arco<T>>> vertices = new HashMap<>();
+        
+        @Override
 	public void agregarVertice(int verticeId) {
-		// TODO Auto-generated method stub
-
+            vertices.putIfAbsent(verticeId, new LinkedList());
 	}
 
 	@Override
 	public void borrarVertice(int verticeId) {
-		// TODO Auto-generated method stub
+		vertices.remove(verticeId);
 
 	}
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
-		// TODO Auto-generated method stub
+		LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1); //si es que el vertice no existe, retorna null
+                if(arcosVertice != null){ //si el vertice existe
+                    Arco arco = new Arco(verticeId1, verticeId2, etiqueta); //arco que vamos a agregar
+                    if(arcosVertice.contains(arco)){ //si ya existe el arco
+                        return;
+                    }
+                    arcosVertice.add(arco);
+                }
+                
 
 	}
 
 	@Override
 	public void borrarArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
-
+            LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);
+            if(arcosVertice != null){
+                Arco arco = new Arco(verticeId1, verticeId2); //instanciamos un arco con las caracteristicas del que queremos eliminar
+                if(arcosVertice.contains(arco)){ //si existe el arco buscado
+                    arcosVertice.remove(arco); //lo borramos
+                }
+            }
 	}
 
 	@Override
 	public boolean contieneVertice(int verticeId) {
-		// TODO Auto-generated method stub
-		return false;
+		return vertices.containsKey(verticeId);
 	}
 
 	@Override
 	public boolean existeArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
-		return false;
+            LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);
+            if(arcosVertice != null){
+                Arco arco = new Arco(verticeId1, verticeId2);
+                return arcosVertice.contains(arco); //verdadero si esta, falso si no. el arco buscado
+            }
+            return false; //no existe el vertice 1
 	}
 
 	@Override
 	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
-		return null;
+            LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);
+            if(arcosVertice != null){
+		Arco arco = new Arco(verticeId1, verticeId2); //este arco se usa para ver si existe en el vertice
+                if(arcosVertice.contains(arco)){
+                    return arco;
+                }
+            }
+            return null; //no existe el vertice 1 o el arco no existe
 	}
 
 	@Override
 	public int cantidadVertices() {
-		// TODO Auto-generated method stub
-		return 0;
+		return vertices.size();
 	}
 
 	@Override
 	public int cantidadArcos() {
-		// TODO Auto-generated method stub
-		return 0;
+            int cantidad = 0;
+            for(LinkedList lista : vertices.values()){ //por cada lista de arco de cada vertice
+                cantidad += lista.size(); //aumentamos la cantidad de arcos
+            }
+            return cantidad;
 	}
 
 	@Override
-	public Iterator<Integer> obtenerVertices() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Integer> obtenerVertices() { //preguntar si esta bien
+		return vertices.keySet().iterator(); //ketSey me da una coleccion de los id del hashmap, retornamos un iterator de esa coleccion
 	}
 
 	@Override
-	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Integer> obtenerAdyacentes(int verticeId) { //adyacente es a los que apunta. pero tambien a los que es apuntado??
+            LinkedList<Integer> adyacentes = new LinkedList<>(); //linkedList de los vertices adyacentes
+            LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId);
+            if(arcosVertice != null){
+                for(Arco arco : arcosVertice){//por cada arco
+                    if(! adyacentes.contains(arco.getVerticeDestino())){ //si su vertice destino no esta ya agregado a la lista de adyacentes
+                        adyacentes.add(arco.getVerticeDestino()); //agregamos el vertice adyacente a la lista
+                    }
+                }
+            }
+            return adyacentes.iterator();
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Arco<T>> obtenerArcos() {//esta bien este metodo si es un grafo doblemente vinculado?
+            LinkedList<Arco<T>> arcos = new LinkedList<>();
+            for(LinkedList<Arco<T>> listaArcos : vertices.values()){ //recorro cada lista de arcos de cada uno de mis vertices
+                arcos.addAll(listaArcos); //agregamos todos los arcos de ese 'x' vertice
+            }
+            return arcos.iterator(); //retornamos el iterador
 	}
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
-		// TODO Auto-generated method stub
-		return null;
+            return vertices.get(verticeId).iterator(); //obtengo la lista vinculada de arcos del vertice y retorno su iterator
 	}
-
+        
 }

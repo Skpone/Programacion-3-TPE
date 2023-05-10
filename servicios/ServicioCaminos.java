@@ -2,12 +2,11 @@ package servicios;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import estructuras.Grafo;
 
 public class ServicioCaminos {
 
-	private Grafo<?> grafo;
+    private Grafo<?> grafo;
 	private int origen;
 	private int destino;
 	private int lim;
@@ -24,5 +23,5 @@ public class ServicioCaminos {
 		// Resolver Caminos
 		return new ArrayList<>();
 	}
-
+        
 }
