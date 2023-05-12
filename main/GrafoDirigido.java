@@ -98,7 +98,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Integer> obtenerVertices() { //preguntar si esta bien, o se requieren los vertices con sus adyacentes tambien??
+	public Iterator<Integer> obtenerVertices() {
 		return vertices.keySet().iterator(); //ketSey me da una coleccion de los id del hashmap, retornamos un iterator de esa coleccion
 	}
 
