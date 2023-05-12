@@ -21,9 +21,15 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public void borrarVertice(int verticeId) {
-            vertices.remove(verticeId);
-            for(Integer vertice : vertices.keySet()){
-                this.borrarArco(vertice, verticeId); //necesitamos borrar los arcos que otros vertices apuntan a nuestro vertice
+            if(this.contieneVertice(verticeId)){
+                vertices.remove(verticeId);
+                Iterator<Arco<T>> iterator = this.obtenerArcos();
+                while(iterator.hasNext()){
+                    Arco<T> arco = iterator.next();
+                    if(arco.getVerticeDestino() == verticeId){
+                        this.borrarArco(arco.getVerticeOrigen(), verticeId); //necesitamos borrar los arcos que otros vertices apuntan a nuestro vertice
+                    }
+                }
             }
 	}
 
@@ -37,8 +43,6 @@ public class GrafoDirigido<T> implements Grafo<T> {
                     }
                     arcosVertice.add(arco);
                 }
-                
-
 	}
 
 	@Override
