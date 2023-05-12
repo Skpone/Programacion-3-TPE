@@ -8,9 +8,11 @@ import java.util.LinkedList;
 import java.util.Collections;
 
 public class GrafoDirigido<T> implements Grafo<T> {
-        HashMap<Integer, LinkedList<Arco<T>>> vertices = new HashMap<>();
+        HashMap<Integer, LinkedList<Arco<T>>> vertices;
 
-        //COMO INSTANCIO, asegurar que el hashmap nunca sea null
+        public GrafoDirigido() {
+            vertices = new HashMap<>();
+        }
         
         @Override
 	public void agregarVertice(int verticeId) {
@@ -19,8 +21,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public void borrarVertice(int verticeId) {
-		vertices.remove(verticeId);
-
+            vertices.remove(verticeId);
+            for(Integer vertice : vertices.keySet()){
+                this.borrarArco(vertice, verticeId); //necesitamos borrar los arcos que otros vertices apuntan a nuestro vertice
+            }
 	}
 
 	@Override
