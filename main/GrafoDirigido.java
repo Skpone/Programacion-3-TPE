@@ -5,9 +5,12 @@ import estructuras.Grafo;
 import estructuras.Arco;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Collections;
 
 public class GrafoDirigido<T> implements Grafo<T> {
         HashMap<Integer, LinkedList<Arco<T>>> vertices = new HashMap<>();
+
+        //COMO INSTANCIO, asegurar que el hashmap nunca sea null
         
         @Override
 	public void agregarVertice(int verticeId) {
@@ -66,7 +69,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
             if(arcosVertice != null){
 		Arco arco = new Arco(verticeId1, verticeId2); //este arco se usa para ver si existe en el vertice
                 if(arcosVertice.contains(arco)){
-                    return arco;
+                    return arco; //retornamos el clon (por la estructura del arco.. es lo mismo que retornar el original)
                 }
             }
             return null; //no existe el vertice 1 o el arco no existe
@@ -87,26 +90,24 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Integer> obtenerVertices() { //preguntar si esta bien
+	public Iterator<Integer> obtenerVertices() { //preguntar si esta bien, o se requieren los vertices con sus adyacentes tambien??
 		return vertices.keySet().iterator(); //ketSey me da una coleccion de los id del hashmap, retornamos un iterator de esa coleccion
 	}
 
 	@Override
-	public Iterator<Integer> obtenerAdyacentes(int verticeId) { //adyacente es a los que apunta. pero tambien a los que es apuntado??
-            LinkedList<Integer> adyacentes = new LinkedList<>(); //linkedList de los vertices adyacentes
+	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
+            LinkedList<Integer> verticesAdyacentes = new LinkedList<>();
             LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId);
             if(arcosVertice != null){
                 for(Arco arco : arcosVertice){//por cada arco
-                    if(! adyacentes.contains(arco.getVerticeDestino())){ //si su vertice destino no esta ya agregado a la lista de adyacentes
-                        adyacentes.add(arco.getVerticeDestino()); //agregamos el vertice adyacente a la lista
-                    }
+                    verticesAdyacentes.add(arco.getVerticeDestino()); //agregamos el vertice adyacente a la lista
                 }
             }
-            return adyacentes.iterator();
+            return verticesAdyacentes.iterator();
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos() {//esta bien este metodo si es un grafo doblemente vinculado?
+	public Iterator<Arco<T>> obtenerArcos() {
             LinkedList<Arco<T>> arcos = new LinkedList<>();
             for(LinkedList<Arco<T>> listaArcos : vertices.values()){ //recorro cada lista de arcos de cada uno de mis vertices
                 arcos.addAll(listaArcos); //agregamos todos los arcos de ese 'x' vertice
@@ -116,7 +117,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
-            return vertices.get(verticeId).iterator(); //obtengo la lista vinculada de arcos del vertice y retorno su iterator
+            if(vertices.get(verticeId) != null)
+                return vertices.get(verticeId).iterator(); //retornamos el iterator de la lista de arcos del vertice
+            else //en caso de que no exista el vertice
+                return Collections.emptyListIterator(); //tengo que retornar una lista vacía
 	}
         
 }
