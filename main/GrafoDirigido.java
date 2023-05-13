@@ -102,11 +102,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public Iterator<Integer> obtenerVertices() {
 		return vertices.keySet().iterator(); //ketSey me da una coleccion de los id del hashmap, retornamos un iterator de esa coleccion
+                //si no hay vertices, retorna una lista vacia
 	}
 
 	@Override
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-            LinkedList<Integer> verticesAdyacentes = new LinkedList<>();
+            LinkedList<Integer> verticesAdyacentes = new LinkedList<>();//lista donde guardamos los vertices adyacentes
             LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId);
             if(arcosVertice != null){
                 Iterator<Arco<T>> iterator = arcosVertice.iterator();
