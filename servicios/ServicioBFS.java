@@ -39,7 +39,7 @@ public class ServicioBFS {
             return recorrido;
 	}
         
-        public List<Integer> bfsVisit(Integer vertice) {
+        private List<Integer> bfsVisit(Integer vertice) {
             LinkedList<Integer> trama = new LinkedList<>();//trama: una parte del recorrido
             this.visitas.put(vertice, true);//ahora es un vertice visitado
             this.fila.add(vertice);//se agrega a la fila con vertices visitados
