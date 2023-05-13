@@ -38,7 +38,7 @@ public class Arco<T> {
         public boolean equals(Object o){
             try {
                 Arco arco = ((Arco)o);
-                return this.getVerticeDestino() == arco.getVerticeDestino() && this.getVerticeOrigen() == arco.getVerticeOrigen();
+                return this.getVerticeOrigen() == arco.getVerticeOrigen() && this.getVerticeDestino() == arco.getVerticeDestino();
             }catch(Exception e){
                 return false;
             }

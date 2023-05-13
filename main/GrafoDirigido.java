@@ -36,7 +36,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
 		LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1); //si es que el vertice no existe, retorna null
-                if(arcosVertice != null){ //si el vertice existe
+                if(arcosVertice != null && vertices.get(verticeId2) != null){ //si los vertices existen
                     Arco arco = new Arco(verticeId1, verticeId2, etiqueta); //arco que vamos a agregar
                     if(arcosVertice.contains(arco)){ //si ya existe el arco
                         return;
