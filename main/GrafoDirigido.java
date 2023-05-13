@@ -91,8 +91,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public int cantidadArcos() {
             int cantidad = 0;
-            for(LinkedList lista : vertices.values()){ //por cada lista de arco de cada vertice
-                cantidad += lista.size(); //aumentamos la cantidad de arcos
+            Iterator<LinkedList<Arco<T>>> iterator = vertices.values().iterator();//obtengo todas las listas de arcos de todos los vertices
+            while(iterator.hasNext()){//por cada lista
+                LinkedList<Arco<T>> listaArcos = iterator.next(); //obtenemos la lista
+                cantidad += listaArcos.size(); //agregamos la cantidad de arcos que tiene
             }
             return cantidad;
 	}
@@ -107,7 +109,9 @@ public class GrafoDirigido<T> implements Grafo<T> {
             LinkedList<Integer> verticesAdyacentes = new LinkedList<>();
             LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId);
             if(arcosVertice != null){
-                for(Arco arco : arcosVertice){//por cada arco
+                Iterator<Arco<T>> iterator = arcosVertice.iterator();
+                while(iterator.hasNext()){//por cada arco del vertice
+                    Arco<T> arco = iterator.next();
                     verticesAdyacentes.add(arco.getVerticeDestino()); //agregamos el vertice adyacente a la lista
                 }
             }
@@ -117,8 +121,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public Iterator<Arco<T>> obtenerArcos() {
             LinkedList<Arco<T>> arcos = new LinkedList<>();
-            for(LinkedList<Arco<T>> listaArcos : vertices.values()){ //recorro cada lista de arcos de cada uno de mis vertices
-                arcos.addAll(listaArcos); //agregamos todos los arcos de ese 'x' vertice
+            Iterator<LinkedList<Arco<T>>> iterator = vertices.values().iterator();
+            while(iterator.hasNext()){
+                LinkedList<Arco<T>> listaArcos = iterator.next();
+                arcos.addAll(listaArcos);//agregamos los arcos que contiene la lista
             }
             return arcos.iterator(); //retornamos el iterador
 	}

@@ -39,7 +39,7 @@ public class ServicioDFS {
         
         
         private List<Integer> dfsVisit(Integer vertice){
-            LinkedList<Integer> trama = new LinkedList<>(); //trama = x trama del camino
+            LinkedList<Integer> trama = new LinkedList<>();//trama: una parte del recorrido
             trama.add(vertice); //agregamos el vertice a la trama
             this.colores.put(vertice, "AMARILLO");//ahora es un vertice visitado
             
