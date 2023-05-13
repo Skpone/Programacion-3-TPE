@@ -1,6 +1,5 @@
 package servicios;
 
-import java.util.ArrayList;
 import java.util.List;
 import estructuras.Grafo;
 import java.util.HashMap;
@@ -17,7 +16,7 @@ public class ServicioDFS {
                 this.colores = new HashMap<>();
 	}
         
-        private Iterator<Integer> blanquearVertices(){
+        private Iterator<Integer> iniciarVertices(){
             Iterator<Integer> iterator = this.grafo.obtenerVertices();
             while(iterator.hasNext()){
                 Integer vertice = iterator.next();
@@ -27,30 +26,30 @@ public class ServicioDFS {
         }
         
 	public List<Integer> dfsForest() {
-                LinkedList<Integer> recorridoTotal = new LinkedList<>();
-                Iterator<Integer> iterator = this.blanquearVertices(); //retorna los vertices del grafo pintados de blanco
+                LinkedList<Integer> recorrido = new LinkedList<>();
+                Iterator<Integer> iterator = this.iniciarVertices(); //retorna los vertices del grafo pintados de blanco
                 while(iterator.hasNext()){ //por cada vertice
                     Integer vertice = iterator.next();
                     if(this.colores.get(vertice).equals("BLANCO")){ //si esta pintado de blanco (no fue visitado)
-                        recorridoTotal.addAll(this.dfsVisit(vertice)); //se recorre y registra su recorrido
+                        recorrido.addAll(this.dfsVisit(vertice)); //se recorre y registra su trama
                     }
                 }
-		return recorridoTotal;
+		return recorrido;
 	}
         
         
         private List<Integer> dfsVisit(Integer vertice){
-            LinkedList<Integer> recorrido = new LinkedList<>();
-            this.colores.put(vertice, "AMARILLO");//vertice visitado
-            recorrido.add(vertice); //agregamos el vertice al recorrido
+            LinkedList<Integer> trama = new LinkedList<>(); //trama = x trama del camino
+            trama.add(vertice); //agregamos el vertice a la trama
+            this.colores.put(vertice, "AMARILLO");//ahora es un vertice visitado
             
             Iterator<Integer> iterator = grafo.obtenerAdyacentes(vertice);
             while(iterator.hasNext()){ //por cada vertice adyacente del pasado por parametro
                 Integer verticeAdyacente = iterator.next();
                 if(this.colores.get(verticeAdyacente).equals("BLANCO")){ //si no fue visitado
-                    recorrido.addAll(this.dfsVisit(verticeAdyacente)); //recorremos
+                    trama.addAll(this.dfsVisit(verticeAdyacente)); //agregamos sus tramas
                 }
             }
-            return recorrido;
+            return trama;
         }
 }
