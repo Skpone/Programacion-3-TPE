@@ -101,8 +101,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public Iterator<Integer> obtenerVertices() {
-		return vertices.keySet().iterator(); //ketSey me da una coleccion de los id del hashmap, retornamos un iterator de esa coleccion
-                //si no hay vertices, retorna una lista vacia
+		return vertices.keySet().iterator(); //retornamos un iterator de los id del hashmap. Si no hay vertices, retorna una lista vacia.
 	}
 
 	@Override
@@ -123,17 +122,18 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public Iterator<Arco<T>> obtenerArcos() {
             LinkedList<Arco<T>> arcos = new LinkedList<>();
             Iterator<LinkedList<Arco<T>>> iterator = vertices.values().iterator();
-            while(iterator.hasNext()){
+            while(iterator.hasNext()){//por cada lista con arcos
                 LinkedList<Arco<T>> listaArcos = iterator.next();
-                arcos.addAll(listaArcos);//agregamos los arcos que contiene la lista
+                arcos.addAll(listaArcos);//agregamos los arcos de la lista a la lista arcos
             }
             return arcos.iterator(); //retornamos el iterador
 	}
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
-            if(vertices.get(verticeId) != null)
-                return vertices.get(verticeId).iterator(); //retornamos el iterator de la lista de arcos del vertice
+            Iterator<Arco<T>> iterator = this.vertices.get(verticeId).iterator();//obtenemos la lista de arcos del vertice en un iterator
+            if(iterator != null)//si el vertice existe
+                return iterator; //retornamos el iterator
             else //en caso de que no exista el vertice
                 return Collections.emptyListIterator(); //tengo que retornar una lista vacía
 	}
