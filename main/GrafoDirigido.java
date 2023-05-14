@@ -20,14 +20,13 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public void borrarVertice(int verticeId) {//O(n) (eliminar el vertice, obtener todos los arcos, recorrerlos y borrarlos en caso de que tenga como origen el vertice borrado, requieren de recorridos)
-            if(this.contieneVertice(verticeId)){//O(1)
+	public void borrarVertice(int verticeId) {//O(n^2) (eliminar el vertice y obtener todos los arcos requiere de recorrido. Y luego recorreriendo esos arcos borrarlos [que requiere recorrido] en caso de que tenga como destino el vertice borrado implica O(n^2))
+            if(this.contieneVertice(verticeId)){//O(1) o O(log(n))?
                 vertices.remove(verticeId);//O(n) o O(log(n))?
                 Iterator<Arco<T>> iterator = this.obtenerArcos();//O(n)
                 while(iterator.hasNext()){//O(n)
                     Arco<T> arco = iterator.next();
                     if(arco.getVerticeDestino() == verticeId){
-                        //O(n)
                         this.borrarArco(arco.getVerticeOrigen(), verticeId); //necesitamos borrar los arcos que otros vertices apuntan a nuestro vertice
                     }
                 }
@@ -59,12 +58,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
         
 	@Override
 	public boolean contieneVertice(int verticeId) {//O(1) 
-		return vertices.containsKey(verticeId);//O(1)
+		return vertices.containsKey(verticeId);//O(1) u O(log(n))
 	}
 
 	@Override
-	public boolean existeArco(int verticeId1, int verticeId2) {//O(n) (porque requerimos saber si la lista de arcos tiene el arco que buscamos, en el peor caso tiene que recorrer hasta el final)
-            LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);//O(1)
+	public boolean existeArco(int verticeId1, int verticeId2) {//O(n) (porque requerimos saber si la lista de arcos tiene el arco que buscamos, el .contains() en el peor caso tiene que recorrer hasta el final)
+            LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);//O(1) u O(log(n))?
             if(arcosVertice != null){
                 Arco arco = new Arco(verticeId1, verticeId2);//O(1)
                 return arcosVertice.contains(arco); //verdadero si esta, falso si no. el arco buscado
@@ -120,7 +119,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos() {//O(n) (aplica a la cantidad de lista de arcos que haya y al metodo addAll que requiere recorrer todos los elementos de cada lista)
+	public Iterator<Arco<T>> obtenerArcos() {//O(n*h) (n aplica a la cantidad de lista de arcos que haya y h todos los elementos de cada lista que se tienen que recorrer para agregar)
             LinkedList<Arco<T>> arcos = new LinkedList<>();
             Iterator<LinkedList<Arco<T>>> iterator = vertices.values().iterator();
             while(iterator.hasNext()){//por cada lista con arcos
