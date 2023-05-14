@@ -7,9 +7,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import servicios.ServicioBFS;
+import servicios.ServicioCaminos;
 import servicios.ServicioDFS;
 
 public class Testing {
+    
     /**
      * 1:TEST METODOS DEL GRAFO DIRIGIDO PD: está al final porque se cambia la estructura del grafo.
      * 2:TEST SERVICIODFS Y BFS 
@@ -59,7 +61,7 @@ public class Testing {
         //SERVICIO DFS
         System.out.println("//RECORRIDO DEL SERVICIO DFS");
         List<Integer> recorridoDfs = servicioDfs.dfsForest();
-        System.out.println(Arrays.toString(recorridoDfs.toArray()));
+        System.out.println(Arrays.toString(recorridoDfs.toArray()));//metodo para mostrar el recorrido en un array
         
         //SERVICIO BFS
         System.out.println("//RECORRIDO DEL SERVICIO BFS");
@@ -74,7 +76,11 @@ public class Testing {
         //////////////////////////////////////////////      3:TEST SERVICIOCAMINOS       ////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        
+        /*
+        ServicioCaminos servicioCaminos = new ServicioCaminos(grafo, 1, 13 ,999);
+        List<List<Integer>> caminos = servicioCaminos.caminos();
+        System.out.println(Arrays.toString(caminos.toArray()));//metodo para mostrar el recorrido en un array con arrays
+        */
         
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////      3:TEST SERVICIOCAMINOS       ////////////////////////////////////////////////////////

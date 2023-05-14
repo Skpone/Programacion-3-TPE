@@ -15,18 +15,19 @@ public class GrafoDirigido<T> implements Grafo<T> {
         }
         
         @Override
-	public void agregarVertice(int verticeId) {
-            vertices.putIfAbsent(verticeId, new LinkedList());
+	public void agregarVertice(int verticeId) {//O(1)
+            vertices.putIfAbsent(verticeId, new LinkedList());//O(1)
 	}
 
 	@Override
-	public void borrarVertice(int verticeId) {
-            if(this.contieneVertice(verticeId)){
-                vertices.remove(verticeId);
-                Iterator<Arco<T>> iterator = this.obtenerArcos();
-                while(iterator.hasNext()){
+	public void borrarVertice(int verticeId) {//O(n) (eliminar el vertice, obtener todos los arcos, recorrerlos y borrarlos en caso de que tenga como origen el vertice borrado, requieren de recorridos)
+            if(this.contieneVertice(verticeId)){//O(1)
+                vertices.remove(verticeId);//O(n)
+                Iterator<Arco<T>> iterator = this.obtenerArcos();//O(n)
+                while(iterator.hasNext()){//O(n)
                     Arco<T> arco = iterator.next();
                     if(arco.getVerticeDestino() == verticeId){
+                        //O(n)
                         this.borrarArco(arco.getVerticeOrigen(), verticeId); //necesitamos borrar los arcos que otros vertices apuntan a nuestro vertice
                     }
                 }
@@ -34,7 +35,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
+	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {//O(n) (el preguntarle a la lista de arcos si tiene el arco requiere recorrer hasta el final en el peor caso)
             LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1); //si es que el vertice no existe, retorna null
                 if(arcosVertice != null && vertices.get(verticeId2) != null){ //si los vertices existen
                     Arco arco = new Arco(verticeId1, verticeId2, etiqueta); //arco que vamos a agregar
@@ -46,7 +47,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public void borrarArco(int verticeId1, int verticeId2) {
+	public void borrarArco(int verticeId1, int verticeId2) {//O(n) (en el .contains y .remove requiere en el peor de los casos recorrer hasta el final)
             LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);
             if(arcosVertice != null){
                 Arco arco = new Arco(verticeId1, verticeId2); //instanciamos un arco con las caracteristicas del que queremos eliminar
@@ -55,24 +56,24 @@ public class GrafoDirigido<T> implements Grafo<T> {
                 }
             }
 	}
-
+        
 	@Override
-	public boolean contieneVertice(int verticeId) {
-		return vertices.containsKey(verticeId);
+	public boolean contieneVertice(int verticeId) {//O(1) 
+		return vertices.containsKey(verticeId);//O(1)
 	}
 
 	@Override
-	public boolean existeArco(int verticeId1, int verticeId2) {
-            LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);
+	public boolean existeArco(int verticeId1, int verticeId2) {//O(n) (porque requerimos saber si la lista de arcos tiene el arco que buscamos, en el peor caso tiene que recorrer hasta el final)
+            LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);//O(1)
             if(arcosVertice != null){
-                Arco arco = new Arco(verticeId1, verticeId2);
+                Arco arco = new Arco(verticeId1, verticeId2);//O(1)
                 return arcosVertice.contains(arco); //verdadero si esta, falso si no. el arco buscado
             }
             return false; //no existe el vertice 1
 	}
 
 	@Override
-	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
+	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {//O(n) (requerimos saber si el arco existe con el .contains)
             LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId1);
             if(arcosVertice != null){
 		Arco arco = new Arco(verticeId1, verticeId2); //este arco se usa para ver si existe en el vertice
@@ -84,12 +85,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public int cantidadVertices() {
-		return vertices.size();
+	public int cantidadVertices() {//O(1)
+		return vertices.size();//O(1)
 	}
 
 	@Override
-	public int cantidadArcos() {
+	public int cantidadArcos() {//O(n) (aplica a la cantidad de listas de arcos que tenga mi hashmap vertices ya que tengo que recorrer cada una en el while loop)
             int cantidad = 0;
             Iterator<LinkedList<Arco<T>>> iterator = vertices.values().iterator();//obtengo todas las listas de arcos de todos los vertices
             while(iterator.hasNext()){//por cada lista
@@ -100,12 +101,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Integer> obtenerVertices() {
+	public Iterator<Integer> obtenerVertices() {//O(1)
 		return vertices.keySet().iterator(); //retornamos un iterator de los id del hashmap. Si no hay vertices, retorna una lista vacia.
 	}
 
 	@Override
-	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
+	public Iterator<Integer> obtenerAdyacentes(int verticeId) {//O(n) (n siendo la cantidad de arcos del vertice, al requerir recorrerlos para obtener los adyacentes)
             LinkedList<Integer> verticesAdyacentes = new LinkedList<>();//lista donde guardamos los vertices adyacentes
             LinkedList<Arco<T>> arcosVertice = vertices.get(verticeId);
             if(arcosVertice != null){
@@ -119,7 +120,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos() {
+	public Iterator<Arco<T>> obtenerArcos() {//O(n) (aplica a la cantidad de lista de arcos que haya y al metodo addAll que requiere recorrer todos los elementos de cada lista)
             LinkedList<Arco<T>> arcos = new LinkedList<>();
             Iterator<LinkedList<Arco<T>>> iterator = vertices.values().iterator();
             while(iterator.hasNext()){//por cada lista con arcos
@@ -130,7 +131,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
+	public Iterator<Arco<T>> obtenerArcos(int verticeId) {//O(1) (obtener la lista de arcos de nuestro vertice y luego retornarla no requiere ningun tipo de recorrido)
             Iterator<Arco<T>> iterator = this.vertices.get(verticeId).iterator();//obtenemos la lista de arcos del vertice en un iterator
             if(iterator != null)//si el vertice existe
                 return iterator; //retornamos el iterator
@@ -138,4 +139,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
                 return Collections.emptyListIterator(); //tengo que retornar una lista vacía
 	}
         
+        
+        //TEMPLATE PARA JUSTIFICAR LA COMPLEJIDAD DE LOS METODOS
+        /**
+         * Complejidad: O(1) porque
+         * 
+         */
 }
