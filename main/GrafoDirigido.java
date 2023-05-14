@@ -16,13 +16,13 @@ public class GrafoDirigido<T> implements Grafo<T> {
         
         @Override
 	public void agregarVertice(int verticeId) {//O(1)
-            vertices.putIfAbsent(verticeId, new LinkedList());//O(1)
+            vertices.putIfAbsent(verticeId, new LinkedList());//O(1) o O(log(n))?
 	}
 
 	@Override
 	public void borrarVertice(int verticeId) {//O(n) (eliminar el vertice, obtener todos los arcos, recorrerlos y borrarlos en caso de que tenga como origen el vertice borrado, requieren de recorridos)
             if(this.contieneVertice(verticeId)){//O(1)
-                vertices.remove(verticeId);//O(n)
+                vertices.remove(verticeId);//O(n) o O(log(n))?
                 Iterator<Arco<T>> iterator = this.obtenerArcos();//O(n)
                 while(iterator.hasNext()){//O(n)
                     Arco<T> arco = iterator.next();
@@ -132,6 +132,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos(int verticeId) {//O(1) (obtener la lista de arcos de nuestro vertice y luego retornarla no requiere ningun tipo de recorrido)
+            //get() O(1) o O(log(n))?
             Iterator<Arco<T>> iterator = this.vertices.get(verticeId).iterator();//obtenemos la lista de arcos del vertice en un iterator
             if(iterator != null)//si el vertice existe
                 return iterator; //retornamos el iterator

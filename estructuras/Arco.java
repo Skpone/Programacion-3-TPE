@@ -35,7 +35,7 @@ public class Arco<T> {
 	}
         
         @Override
-        public boolean equals(Object o){
+        public boolean equals(Object o){//O(1)
             try {
                 Arco arco = ((Arco)o);
                 return this.getVerticeOrigen() == arco.getVerticeOrigen() && this.getVerticeDestino() == arco.getVerticeDestino();
