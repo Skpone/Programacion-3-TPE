@@ -7,45 +7,45 @@ package estructuras;
  * (Inmutable: una vez creado el arco no es posible cambiarle los valores).
  */
 public class Arco<T> {
-    
-        private int verticeOrigen;
-	private int verticeDestino;
-	private T etiqueta;
 
-        public Arco(int verticeOrigen, int verticeDestino){ //arco sin etiqueta
-            this(verticeOrigen, verticeDestino, null);
-        }
-        
-	public Arco(int verticeOrigen, int verticeDestino, T etiqueta) { //arco con etiqueta
-		this.verticeOrigen = verticeOrigen;
-		this.verticeDestino = verticeDestino;
-		this.etiqueta = etiqueta;
-	}
-	
-	public int getVerticeOrigen() {
-		return verticeOrigen;
-	}
-	
-	public int getVerticeDestino() {
-		return verticeDestino;
-	}
+    private int verticeOrigen;
+    private int verticeDestino;
+    private T etiqueta;
 
-	public T getEtiqueta() {
-		return etiqueta;
-	}
-        
-        @Override
-        public boolean equals(Object o){//O(1)
-            try {
-                Arco arco = ((Arco)o);
-                return this.getVerticeOrigen() == arco.getVerticeOrigen() && this.getVerticeDestino() == arco.getVerticeDestino();
-            }catch(Exception e){
-                return false;
-            }
+    public Arco(int verticeOrigen, int verticeDestino) { //arco sin etiqueta
+        this(verticeOrigen, verticeDestino, null);
+    }
+
+    public Arco(int verticeOrigen, int verticeDestino, T etiqueta) { //arco con etiqueta
+        this.verticeOrigen = verticeOrigen;
+        this.verticeDestino = verticeDestino;
+        this.etiqueta = etiqueta;
+    }
+
+    public int getVerticeOrigen() {
+        return verticeOrigen;
+    }
+
+    public int getVerticeDestino() {
+        return verticeDestino;
+    }
+
+    public T getEtiqueta() {
+        return etiqueta;
+    }
+
+    @Override
+    public boolean equals(Object o) {//O(1)
+        try {
+            Arco arco = ((Arco) o);
+            return this.getVerticeOrigen() == arco.getVerticeOrigen() && this.getVerticeDestino() == arco.getVerticeDestino();
+        } catch (Exception e) {
+            return false;
         }
-        
-        @Override
-        public String toString(){
-            return "{"+this.verticeOrigen+"("+this.verticeDestino+") "+this.etiqueta+"}";
-        }
+    }
+
+    @Override
+    public String toString() {
+        return "{" + this.verticeOrigen + "(" + this.verticeDestino + ") " + this.etiqueta + "}";
+    }
 }

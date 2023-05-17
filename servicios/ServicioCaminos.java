@@ -15,8 +15,7 @@ public class ServicioCaminos {
     private int lim;
     private HashSet<Arco> arcosVisitados;
     private List<List<Integer>> caminosPosibles;
-    
-    
+
     public ServicioCaminos(Grafo<?> grafo, int origen, int destino, int lim) {
         this.grafo = grafo;
         this.origen = origen;
@@ -29,14 +28,14 @@ public class ServicioCaminos {
     public List<List<Integer>> caminos() {
         this.arcosVisitados.clear();
         this.caminosPosibles.clear();
-        
+
         //Configurar el estado inicial
         ArrayList<Integer> caminoAuxiliar = new ArrayList<>();
         caminoAuxiliar.add(this.origen);
-        
+
         //Obtenemos todos los caminos posibles
         this.obtenerCaminos(this.origen, this.destino, this.lim, caminoAuxiliar);
-        
+
         return this.caminosPosibles;
     }
 
