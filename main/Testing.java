@@ -76,11 +76,17 @@ public class Testing {
         //////////////////////////////////////////////      3:TEST SERVICIOCAMINOS       ////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        /*
-        ServicioCaminos servicioCaminos = new ServicioCaminos(grafo, 1, 13 ,999);
+        
+        System.out.println("//RECORRIDO DEL SERVICIO CAMINOS");
+        //caso 1 (con limite de 3)
+        ServicioCaminos servicioCaminos = new ServicioCaminos(grafo, 1, 13, 3);
         List<List<Integer>> caminos = servicioCaminos.caminos();
         System.out.println(Arrays.toString(caminos.toArray()));//metodo para mostrar el recorrido en un array con arrays
-        */
+        //caso 2 (con limite de 5)
+        servicioCaminos = new ServicioCaminos(grafo, 1, 13, 5);
+        caminos = servicioCaminos.caminos();
+        System.out.println(Arrays.toString(caminos.toArray()));//metodo para mostrar el recorrido en un array con arrays
+        
         
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////      3:TEST SERVICIOCAMINOS       ////////////////////////////////////////////////////////

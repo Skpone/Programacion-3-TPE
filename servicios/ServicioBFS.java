@@ -9,12 +9,12 @@ import java.util.LinkedList;
 public class ServicioBFS {
 
     private Grafo<?> grafo;
-    private HashMap<Integer, Boolean> visitas;
+    private HashMap<Integer, Boolean> visitados;
     private LinkedList<Integer> fila; //fila con vertices visitados
     
 	public ServicioBFS(Grafo<?> grafo) {
 		this.grafo = grafo;
-                this.visitas = new HashMap<>();
+                this.visitados = new HashMap<>();
                 this.fila = new LinkedList<>();
 	}
 	
@@ -22,9 +22,9 @@ public class ServicioBFS {
             Iterator<Integer> iterator = this.grafo.obtenerVertices();
             while(iterator.hasNext()){
                 Integer vertice = iterator.next();
-                this.visitas.put(vertice, false); //seteamos todos los vertices como no visitados
+                this.visitados.put(vertice, false); //seteamos todos los vertices como no visitados
             }
-            return this.visitas.keySet().iterator();
+            return this.visitados.keySet().iterator();
         }
         
 	public List<Integer> bfsForest() {
@@ -32,7 +32,7 @@ public class ServicioBFS {
             Iterator<Integer> iterator = this.iniciarVertices();
             while(iterator.hasNext()){ //por cada vertice
                 Integer vertice = iterator.next();
-                if(!this.visitas.get(vertice)){//si este vertice no fue visitado
+                if(!this.visitados.get(vertice)){//si este vertice no fue visitado
                     recorrido.addAll(this.bfsVisit(vertice));
                 }
             }
@@ -41,7 +41,7 @@ public class ServicioBFS {
         
         private List<Integer> bfsVisit(Integer vertice) {
             LinkedList<Integer> trama = new LinkedList<>();//trama: una parte del recorrido
-            this.visitas.put(vertice, true);//ahora es un vertice visitado
+            this.visitados.put(vertice, true);//ahora es un vertice visitado
             this.fila.add(vertice);//se agrega a la fila con vertices visitados
             
             while(!fila.isEmpty()){//si hay vertices en la fila
@@ -50,8 +50,8 @@ public class ServicioBFS {
                 Iterator<Integer> iterator = this.grafo.obtenerAdyacentes(v);
                 while(iterator.hasNext()){//agregamos sus adyacentes a la lista (los que no fueron visitados)
                     Integer adyacente = iterator.next();
-                    if(!this.visitas.get(adyacente)){//si no fue visitado
-                        this.visitas.put(adyacente, true);//ahora lo es
+                    if(!this.visitados.get(adyacente)){//si no fue visitado
+                        this.visitados.put(adyacente, true);//ahora lo es
                         this.fila.add(adyacente);
                     }
                 }
