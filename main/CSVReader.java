@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class CSVReader {
 
@@ -14,12 +15,15 @@ public class CSVReader {
         this.path = path;
     }
 
-    public void read() {
+    public LinkedList<Arco> read() {
 
         // Obtengo una lista con las lineas del archivo
         // lines.get(0) tiene la primer linea del archivo
         // lines.get(1) tiene la segunda linea del archivo... y así
         ArrayList<String[]> lines = this.readContent();
+        
+        //Acá es dónde voy a guardar todos los tuneles que vaya encontrándo
+        LinkedList<Arco> arcos = new LinkedList<>();
 
         for (String[] line : lines) {
             // Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
@@ -27,9 +31,11 @@ public class CSVReader {
             Integer destino = Integer.parseInt(line[1].trim().substring(1));
             Integer etiqueta = Integer.parseInt(line[2].trim());
 
-            // Aca instanciar lo que necesiten en base a los datos leidos
+            //creamos dos arcos para representar un túnel, ya que los tuneles tienen doble mano.
+            arcos.add(new Arco(origen, destino, etiqueta));
+            arcos.add(new Arco(destino, origen, etiqueta));
         }
-
+        return arcos;
     }
 
     private ArrayList<String[]> readContent() {
