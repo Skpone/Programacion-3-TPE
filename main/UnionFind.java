@@ -1,3 +1,4 @@
+package main;
 
 import java.util.NoSuchElementException;
 
@@ -24,7 +25,7 @@ public class UnionFind {
      *
      * @param n
      */
-    public UnionFind(int n) {
+    public UnionFind(int n) {//n == CANTIDAD DE ESTACIONES
         if (n <= 0) {
             throw new IllegalArgumentException("Expected n > 0");
         }
@@ -45,7 +46,7 @@ public class UnionFind {
      * @param i
      * @return
      */
-    public int find(int i) {
+    public int find(int i) {//PUEDE SER QUE USEMOS PARA SABER SI DOS ESTACIONES PERTENECEN AL MISMO CONJUNTO
         if (i < 0 || i > parent.length) {
             throw new NoSuchElementException("Invalid element");
         }
@@ -60,7 +61,7 @@ public class UnionFind {
      * @param v
      * @return the representative of union
      */
-    public int union(int u, int v) {
+    public int union(int u, int v) {//VAMOS A USAR PARA UNIR CONJUNTOS DISJUNTOS
         // Replace elements by representatives
 
         u = find(u);
@@ -86,7 +87,7 @@ public class UnionFind {
         return v;
     }
 
-    public int numberOfSets() {
+    public int numberOfSets() {//VAMOS A USAR PARA SABER SI EL SOLUCION (CUANDO num == 1)
         return num;
     }
 
