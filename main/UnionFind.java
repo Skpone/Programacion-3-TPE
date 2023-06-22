@@ -40,6 +40,12 @@ public class UnionFind {
         num = n;
     }
 
+    private UnionFind(int[] parent, int[] rank, int num) {
+        this.parent = parent.clone();
+        this.rank = rank.clone();
+        this.num = num;
+    }
+
     /**
      * Find representative element (i.e root of tree) for element i
      *
@@ -141,5 +147,9 @@ public class UnionFind {
     public int rank(int u) {
         u = root(u);
         return rank[u];
+    }
+
+    public UnionFind copy() {
+        return new UnionFind(parent, rank, num);
     }
 }

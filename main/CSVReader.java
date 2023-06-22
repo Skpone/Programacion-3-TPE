@@ -21,19 +21,19 @@ public class CSVReader {
         // lines.get(0) tiene la primer linea del archivo
         // lines.get(1) tiene la segunda linea del archivo... y así
         ArrayList<String[]> lines = this.readContent();
-        
+
         //Acá es dónde voy a guardar todos los tuneles que vaya encontrándo
         LinkedList<Arco> arcos = new LinkedList<>();
 
         for (String[] line : lines) {
-            // Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
+            //Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
             Integer origen = Integer.parseInt(line[0].trim().substring(1));
             Integer destino = Integer.parseInt(line[1].trim().substring(1));
             Integer etiqueta = Integer.parseInt(line[2].trim());
 
             //creamos dos arcos para representar un túnel, ya que los tuneles tienen doble mano.
             arcos.add(new Arco(origen, destino, etiqueta));
-            arcos.add(new Arco(destino, origen, etiqueta));
+            //arcos.add(new Arco(destino, origen, etiqueta));//creo que no hace falta
         }
         return arcos;
     }
