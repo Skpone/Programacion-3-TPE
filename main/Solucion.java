@@ -77,7 +77,6 @@ public class Solucion<T> {
     
     @Override
     public String toString() {
-        return "Costo (en pasos): "+costo+". Kilómetros totales: "+valorTotal+".\n"
-                + "Camino:\n" + listaSolucion.toString();
+        return "Costo: "+costo+" pasos.\nDistancia total: "+valorTotal+"m.\n"+listaSolucion.toString();
     }
 }
