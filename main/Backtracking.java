@@ -10,12 +10,12 @@ public class Backtracking {
         mejorSolucion = new Solucion();
     }
 
-    public Solucion back(List<Arco> arcos, int initNum) {
+    public Solucion back(List<Arco> arcos, int cantidadVertices) {
         mejorSolucion.setValorTotal(Integer.MAX_VALUE);
         mejorSolucion.setCosto(0);
 
         Solucion solucionParcial = new Solucion();
-        UnionFind estadoSolucion = new UnionFind(initNum);
+        UnionFind estadoSolucion = new UnionFind(cantidadVertices);
 
         back(arcos, solucionParcial, estadoSolucion, 0);
         return mejorSolucion;

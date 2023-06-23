@@ -15,10 +15,14 @@ public class Main {
         ArrayList<Arco> arcos = reader.read();
 
         Backtracking back = new Backtracking();
-        Solucion solucionBack = back.back(arcos, obtenerCantidadDeEstaciones(arcos));
-        System.out.println(solucionBack);
+        Solucion solucion = back.back(arcos, obtenerCantidadDeEstaciones(arcos));
+        System.out.println("Backtracking:");
+        System.out.println(solucion);
         
-        
+        Greedy greedy = new Greedy();
+        solucion = greedy.greedy(arcos, obtenerCantidadDeEstaciones(arcos));
+        System.out.println("Greedy:");
+        System.out.println(solucion);
 
     }
 
