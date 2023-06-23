@@ -45,6 +45,6 @@ public class Arco<T> {
 
     @Override
     public String toString() {
-        return "{" + this.verticeOrigen + "(" + this.verticeDestino + ") " + this.etiqueta + "}";
+        return "{" + this.verticeOrigen + ";" + this.verticeDestino + ";" + this.etiqueta + "}";
     }
 }

@@ -31,9 +31,9 @@ public class CSVReader {
             Integer destino = Integer.parseInt(line[1].trim().substring(1));
             Integer etiqueta = Integer.parseInt(line[2].trim());
 
-            //creamos dos arcos para representar un túnel, ya que los tuneles tienen doble mano.
+            //cada arco representa un túnel
+            System.out.println(origen+";"+destino+";"+etiqueta);
             arcos.add(new Arco(origen, destino, etiqueta));
-            //arcos.add(new Arco(destino, origen, etiqueta));//creo que no hace falta
         }
         return arcos;
     }

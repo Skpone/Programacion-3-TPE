@@ -9,20 +9,27 @@ public class Main {
         String path = "src/datasets/dataset1.txt";
         CSVReader reader = new CSVReader(path);
 
-        //arcos que representan a los túneles, hay dos por cada túnel, pq un túnel tiene doble mano
+        //cada arco representa un túnel
         LinkedList<Arco> arcos = reader.read();
 
-        UnionFind conjuntosDisjuntos = new UnionFind(obtenerCantidadDeEstaciones(arcos));
+        Backtracking back = new Backtracking();
+        Solucion solucionBack = back.back(arcos, obtenerCantidadDeEstaciones(arcos));
+        System.out.println(solucionBack);
+        
+        
 
     }
 
-    private static int obtenerCantidadDeEstaciones(LinkedList<Arco> arcos) {
+    private static int obtenerCantidadDeEstaciones(LinkedList<Arco> arcos) {//BUSCAR UNA MANERA MENOS COSTOSA
         LinkedList<Integer> visitados = new LinkedList<>();
         for (Arco arco : arcos) {
             Integer verticeOrigen = arco.getVerticeOrigen();
-            //como existen dos arcos para representar un tunel, siempre vamos (usando el origen o destino) encontrar todas las estaciones
+            Integer verticeDestino = arco.getVerticeDestino();
             if (!visitados.contains(verticeOrigen)) {
                 visitados.add(verticeOrigen);
+            }
+            if (!visitados.contains(verticeDestino)) {
+                visitados.add(verticeDestino);
             }
         }
         return visitados.size();

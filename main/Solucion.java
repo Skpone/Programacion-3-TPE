@@ -13,6 +13,15 @@ public class Solucion<T> {
         valorTotal = 0;
         costo = 0;
     }
+    
+    private Solucion(LinkedList<T> listaSolucion, int valorTotal, int costo) {
+        this.listaSolucion = new LinkedList<>();
+        for(T elemento : listaSolucion){
+            this.listaSolucion.addLast(elemento);
+        }
+        this.valorTotal = valorTotal;
+        this.costo = costo;
+    }
 
     public boolean contieneElemento(T elemento) {
         return listaSolucion.contains(elemento);
@@ -37,6 +46,10 @@ public class Solucion<T> {
     public boolean eliminarElemento(T elemento) {
         return listaSolucion.remove(elemento);
     }
+    
+    public void setValorTotal(int valor){
+        valorTotal = valor;
+    }
 
     public void sumarAValorTotal(int valor) {
         valorTotal = valorTotal + valor;
@@ -60,5 +73,15 @@ public class Solucion<T> {
 
     public void aumentarCosto() {
         costo++;
+    }
+    
+    public Solucion copy() {
+        return new Solucion(listaSolucion, valorTotal, costo);
+    }
+    
+    @Override
+    public String toString() {
+        return "Costo (en pasos): "+costo+". Kilómetros totales: "+valorTotal+".\n"
+                + "Camino:\n" + listaSolucion.toString();
     }
 }

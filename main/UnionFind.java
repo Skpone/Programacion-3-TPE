@@ -25,7 +25,7 @@ public class UnionFind {
      *
      * @param n
      */
-    public UnionFind(int n) {//n == CANTIDAD DE ESTACIONES
+    public UnionFind(int n) {
         if (n <= 0) {
             throw new IllegalArgumentException("Expected n > 0");
         }
