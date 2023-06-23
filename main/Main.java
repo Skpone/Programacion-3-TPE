@@ -1,6 +1,8 @@
 package main;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class Main {
 
@@ -10,7 +12,7 @@ public class Main {
         CSVReader reader = new CSVReader(path);
 
         //cada arco representa un túnel
-        LinkedList<Arco> arcos = reader.read();
+        ArrayList<Arco> arcos = reader.read();
 
         Backtracking back = new Backtracking();
         Solucion solucionBack = back.back(arcos, obtenerCantidadDeEstaciones(arcos));
@@ -20,8 +22,8 @@ public class Main {
 
     }
 
-    private static int obtenerCantidadDeEstaciones(LinkedList<Arco> arcos) {//BUSCAR UNA MANERA MENOS COSTOSA
-        LinkedList<Integer> visitados = new LinkedList<>();
+    private static int obtenerCantidadDeEstaciones(List<Arco> arcos) {//BUSCAR UNA MANERA MENOS COSTOSA
+        HashSet<Integer> visitados = new HashSet<>();
         for (Arco arco : arcos) {
             Integer verticeOrigen = arco.getVerticeOrigen();
             Integer verticeDestino = arco.getVerticeDestino();

@@ -1,6 +1,6 @@
 package main;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class Backtracking {
 
@@ -10,7 +10,7 @@ public class Backtracking {
         mejorSolucion = new Solucion();
     }
 
-    public Solucion back(LinkedList<Arco> arcos, int initNum) {
+    public Solucion back(List<Arco> arcos, int initNum) {
         mejorSolucion.setValorTotal(Integer.MAX_VALUE);
         mejorSolucion.setCosto(0);
 
@@ -21,28 +21,25 @@ public class Backtracking {
         return mejorSolucion;
     }
 
-    private void back(LinkedList<Arco> arcos, Solucion solucionParcial, UnionFind estadoActual, int tunelActual) {
+    private void back(List<Arco> arcos, Solucion solucionParcial, UnionFind estadoActual, int tunelActual) {
         solucionParcial.aumentarCosto();//cada vez que se entra a un nuevo estado se aumenta el costo
-        System.out.println(solucionParcial);
         if (estadoActual.numberOfSets() == 1) {//si es solución
             if (solucionParcial.getValorTotal() < this.mejorSolucion.getValorTotal()) {//si ahora mi solución es la mejor
                 this.mejorSolucion = solucionParcial.copy();
-                System.out.println("mejor solucion = " + this.mejorSolucion);
             }
+            
         } else {
 
             if (tunelActual < arcos.size()) {//si el túnel actual es válido
 
                 Arco tunel = arcos.get(tunelActual);//lo obtenemos
 
-                System.out.println(tunel.getVerticeOrigen());
-                System.out.println(tunel.getVerticeDestino());
-
+                //PODA, si ya considerar agregar éste túnel supera la cantidad de kilómetros que tiene la mejor solución
                 if ( (solucionParcial.getValorTotal() + ((int) tunel.getEtiqueta())) < this.mejorSolucion.getValorTotal()) {
                     //si las estaciones no estaban ya conectadas por éste u otro túnel
                     if (!(estadoActual.find(tunel.getVerticeOrigen() - 1) == estadoActual.find(tunel.getVerticeDestino() - 1))) {
 
-                        //segunda llamada al back considerándo éste túnel
+                        //primera llamada al back considerándo éste túnel
                         solucionParcial.agregarFinal(tunel);
                         solucionParcial.sumarAValorTotal((int) tunel.getEtiqueta());
                         tunelActual++;
@@ -50,20 +47,17 @@ public class Backtracking {
 
                         //establecemos el túnel entre ambas estaciones
                         estadoTemporal.union(tunel.getVerticeOrigen() - 1, tunel.getVerticeDestino() - 1);
-                        System.out.println("sets:" + estadoActual.numberOfSets());
-                        System.out.println("sets:" + estadoTemporal.numberOfSets());
 
                         back(arcos, solucionParcial, estadoTemporal, tunelActual);
 
-                        //rollback
+                        //deshacemos
                         solucionParcial.eliminarUltimo();
                         solucionParcial.restarAValorTotal((int) tunel.getEtiqueta());
                         tunelActual--;
                     }
                 }
 
-                //primera llamada al back sin agregar el túnel actual
-                System.out.println("sin considerar el tunel");
+                //segunda llamada al back sin agregar el túnel actual
                 tunelActual++;
                 back(arcos, solucionParcial, estadoActual, tunelActual);
             }

@@ -23,10 +23,6 @@ public class Solucion<T> {
         this.costo = costo;
     }
 
-    public boolean contieneElemento(T elemento) {
-        return listaSolucion.contains(elemento);
-    }
-
     public void agregarFinal(T elemento) {
         listaSolucion.add(elemento);
     }
