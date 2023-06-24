@@ -57,7 +57,8 @@ public class Backtracking {
                     }
                 }
 
-                if (tunelActual + 1 < arcos.size()) {//si no hay más túneles siguientes, entonces no sirve crear un estado sin incluirlo
+                //si no hay más túneles siguientes, entonces no sirve crear un estado sin incluirlo
+                if (tunelActual + 1 < arcos.size()) {
                     //segunda llamada al back sin agregar el túnel actual
                     tunelActual++;
                     back(arcos, solucionParcial, estadoActual, tunelActual);

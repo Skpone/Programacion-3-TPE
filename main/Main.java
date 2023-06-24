@@ -26,7 +26,7 @@ public class Main {
 
     }
 
-    private static int obtenerCantidadDeEstaciones(List<Arco> arcos) {//BUSCAR UNA MANERA MENOS COSTOSA
+    private static int obtenerCantidadDeEstaciones(List<Arco> arcos) {
         HashSet<Integer> visitados = new HashSet<>();
         for (Arco arco : arcos) {
             Integer verticeOrigen = arco.getVerticeOrigen();
