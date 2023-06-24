@@ -47,7 +47,7 @@ public class Backtracking {
 
                         //establecemos el túnel entre ambas estaciones
                         estadoTemporal.union(tunel.getVerticeOrigen() - 1, tunel.getVerticeDestino() - 1);
-
+                        
                         back(arcos, solucionParcial, estadoTemporal, tunelActual);
 
                         //deshacemos
@@ -57,9 +57,11 @@ public class Backtracking {
                     }
                 }
 
-                //segunda llamada al back sin agregar el túnel actual
-                tunelActual++;
-                back(arcos, solucionParcial, estadoActual, tunelActual);
+                if (tunelActual + 1 < arcos.size()) {//si no hay más túneles siguientes, entonces no sirve crear un estado sin incluirlo
+                    //segunda llamada al back sin agregar el túnel actual
+                    tunelActual++;
+                    back(arcos, solucionParcial, estadoActual, tunelActual);
+                }
             }
         }
     }
